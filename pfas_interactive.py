@@ -158,11 +158,7 @@ mergedData.columns
 
 """#Pull in Shape File"""
 
-from urllib.request import urlopen
-import json
-
-with urlopen('https://raw.githubusercontent.com/OpenDataDE/State-zip-code-GeoJSON/master/ny_new_york_zip_codes_geo.min.json') as response:
-  zipcodes = json.load(response)
+zipcodes = np.load('zipcodes.npy',allow_pickle='TRUE').item()
 
 #Make list to define radio item choices...
 PFASoptions = list(mergedData['Ionic PFAS'].unique())
