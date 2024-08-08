@@ -2,7 +2,7 @@ dash==2.14.1
 plotly==5.18.0
 numpy==1.24.2
 pandas==2.0.3
-json==2.0.9
+json
 urllib
 gunicorn
 dash-tools
