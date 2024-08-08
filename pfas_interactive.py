@@ -350,7 +350,6 @@ from dash import Dash, dcc, html, Input, Output
 import plotly.express as px
 
 app = Dash(__name__)
-
 server = app.server
 
 app.layout = html.Div([
@@ -486,6 +485,7 @@ def display_choropleth(con_type, compound, years):
 
     return fig
 
-app.run_server(host='0.0.0.0', port=10000)
+app.run_server(debug=False)
+
 
 
