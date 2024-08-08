@@ -485,7 +485,6 @@ def display_choropleth(con_type, compound, years):
 
     return fig
 
-app.run_server(debug=False)
-
+app.run_server(debug = False)
 
 
