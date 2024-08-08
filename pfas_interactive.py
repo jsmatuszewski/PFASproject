@@ -13,8 +13,6 @@ drinkingWater = pd.read_excel('Drinking_Water.xlsx')
 
 drinkingWater = drinkingWater[['Ionic PFAS','Concentration with unit','year','Location']]
 
-drinkingWater
-
 drinkingWater['Data Available'] = 1
 
 def clean_measurements(value):
@@ -65,15 +63,7 @@ drinkingWater['Type'] = 'Drinking Water'
 
 drinkingWater['year'] = drinkingWater['year'].astype(int)
 
-drinkingWater
-
-drinkingWater.dtypes
-
-"""#Prepare Ground Water DF"""
-
 groundWater['Concentration with unit'].replace(0, np.nan, inplace=True)
-
-groundWater
 
 def ppbORppt(x):
     if x == 0:  # Handle case where x is 0
@@ -88,19 +78,12 @@ def ppbORppt(x):
 # Apply lambda function to convert units
 groundWater['Concentration with unit'] = groundWater['Concentration with unit'].apply(lambda x: ppbORppt(x))
 
-groundWater
-
-groundWater.dtypes
-
 groundWater['Concentration with unit'] = groundWater['Concentration with unit'].astype(str)
 
 groundWater['Concentration with unit'] = groundWater['Concentration with unit'].fillna(0)
 
 #Make column 'data available' that will = 1 if the concentration is '<mrl' or *** ppt/ppb, and 0 if concentration is 'nan' or 'nd.'
 groundWater['Data Available'] = 1
-
-#Make sure all years are single year not range.
-groundWater['year'].unique()
 
 groundWater['Type'] = 'Ground Water'
 
@@ -110,16 +93,6 @@ groundWater['Concentration with unit'] = groundWater['Concentration with unit'].
 # Replace NaN values with 0 after the initial cleaning
 groundWater['Concentration with unit'].fillna(0, inplace=True)
 
-groundWater
-
-groundWater.dtypes
-
-"""#Prepare Surface Water DF"""
-
-surfaceWater
-
-surfaceWater
-
 surfaceWater['Concentration with unit'] = surfaceWater['Concentration with unit'].astype(str)
 
 surfaceWater['Concentration with unit'] = surfaceWater['Concentration with unit'].fillna(0)
@@ -127,18 +100,12 @@ surfaceWater['Concentration with unit'] = surfaceWater['Concentration with unit'
 #Make column 'data available' that will = 1 if the concentration is '<mrl' or *** ppt/ppb, and 0 if concentration is 'nan' or 'nd.'
 surfaceWater['Data Available'] = 1
 
-surfaceWater
-
 surfaceWater['Type'] = 'Surface Water'
 
 # Remove ' ppt' and convert to float
 surfaceWater['Concentration with unit'] = surfaceWater['Concentration with unit'].str.replace(' ppt', '').astype(object)
 
 surfaceWater['Concentration with unit'].fillna(0, inplace=True)
-
-surfaceWater
-
-surfaceWater.dtypes
 
 """#Merge All Dataframes"""
 
@@ -151,10 +118,6 @@ mergedData = pd.concat([drinkingWater, groundWater, surfaceWater], ignore_index=
 mergedData['Concentration with unit'] = mergedData['Concentration with unit'].str.replace(' ppt', '').astype(float)
 
 mergedData['Concentration with unit'].fillna(0, inplace=True)
-
-mergedData.to_excel('mergedData.xlsx', index=False)
-
-mergedData.columns
 
 """#Pull in Shape File"""
 
@@ -383,14 +346,12 @@ borough_mapping = {
     ], 'Suffolk (Long Island)')
 }
 
-"""#Plotly App"""
-
 from dash import Dash, dcc, html, Input, Output
 import plotly.express as px
-import pandas as pd
-import numpy as np
 
 app = Dash(__name__)
+
+server = app.server
 
 app.layout = html.Div([
     html.H4('View Compound Prevalence by Zipcode'),
